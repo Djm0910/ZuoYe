@@ -63,7 +63,7 @@ public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TouTian.DataBean dataBean = mList.get(position);
         if (holder instanceof ViewHolderOne) {
             (((ViewHolderOne) holder).mBanner).setImages(mUrl)//添加图片集合或图片url集合
-                    .setDelayTime(2000)//设置轮播时间
+                    .isAutoPlay(true)//设置轮播时间
                     .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                     .setImageLoader(new GlideImage())//加载图片
                     .setIndicatorGravity(BannerConfig.CENTER)//设置指示器位置

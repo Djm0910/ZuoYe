@@ -6,6 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+
+    <style name="Base.Widget.Design.TabLayout." parent="android:Widget">
+        <item name="tabBackground">@drawable/tab_backgroud</item>
+        <item name="tabIndicatorColor">#df1313</item>
+        <item name="tabIndicatorHeight">2dp</item>
     </style>
 
 </resources>
