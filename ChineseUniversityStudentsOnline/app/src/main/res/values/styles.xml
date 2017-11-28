@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -12,8 +12,6 @@
 
     <style name="Base.Widget.Design.TabLayout." parent="android:Widget">
         <item name="tabBackground">@drawable/tab_backgroud</item>
-        <item name="tabIndicatorColor">#df1313</item>
-        <item name="tabIndicatorHeight">2dp</item>
     </style>
 
 </resources>

@@ -15,22 +15,22 @@ import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import demo.example.com.chineseuniversitystudentsonline.Entiy.TouTian;
+;
+import demo.example.com.chineseuniversitystudentsonline.Entiy.XiaoYuan;
 import demo.example.com.chineseuniversitystudentsonline.R;
 
 /**
- * Created by 丁军明 on 2017/11/27.
+ * Created by 丁军明 on 2017/11/28.
  */
 
-public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-    private List<TouTian.DataBean> mList;
+public class MyRecyAdapter1 extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+    private List<XiaoYuan.DataBean> mList;
     private Context mContext;
     private ArrayList<String> mUrl;
     public static final int ONE_ITEM = 1;
     public static final int TWO_ITEM = 2;
 
-    public MyRecyAdapter(List<TouTian.DataBean> mList, Context mContext, ArrayList<String> mUrl) {
+    public MyRecyAdapter1(List<XiaoYuan.DataBean> mList, Context mContext, ArrayList<String> mUrl) {
         this.mList = mList;
         this.mContext = mContext;
         this.mUrl = mUrl;
@@ -43,41 +43,33 @@ public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (ONE_ITEM == viewType) {
             View inflate = inflater.inflate(R.layout.recy_banner, parent, false);
             inflate.setOnClickListener(this);
-            holder = new ViewHolderOne(inflate);
+            holder = new MyRecyAdapter1.ViewHolderOne(inflate);
         } else {
             View inflate = inflater.inflate(R.layout.recy_item, parent, false);
             inflate.setOnClickListener(this);
-            holder = new ViewHolderTwo(inflate);
+            holder = new MyRecyAdapter1.ViewHolderTwo(inflate);
         }
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TouTian.DataBean dataBean = mList.get(position);
+        XiaoYuan.DataBean dataBean = mList.get(position);
         if (holder instanceof ViewHolderOne) {
-            (((ViewHolderOne) holder).mBanner).setImages(mUrl)//添加图片集合或图片url集合
+            (((MyRecyAdapter1.ViewHolderOne) holder).mBanner).setImages(mUrl)//添加图片集合或图片url集合
                     .isAutoPlay(true)//设置轮播时间
                     .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-                    .setImageLoader(new GlideImage())//加载图片
+                    .setImageLoader(new MyRecyAdapter1.GlideImage())//加载图片
                     .setIndicatorGravity(BannerConfig.CENTER)//设置指示器位置
                     .start();
             holder.itemView.setTag(position);
         } else {
             String thumb = dataBean.getThumb();
-            Glide.with(mContext).load(thumb).into(((ViewHolderTwo) holder).mImg);
-            ((ViewHolderTwo) holder).mTitle.setText(dataBean.getTitle() + "");
-            ((ViewHolderTwo) holder).mContent.setText(dataBean.getDescription() + "");
+            Glide.with(mContext).load(thumb).into(((MyRecyAdapter1.ViewHolderTwo) holder).mImg);
+            ((MyRecyAdapter1.ViewHolderTwo) holder).mTitle.setText(dataBean.getTitle() + "");
+            ((MyRecyAdapter1.ViewHolderTwo) holder).mContent.setText(dataBean.getDescription() + "");
             holder.itemView.setTag(position);
         }
-    }
-
-    public class GlideImage extends ImageLoader {
-        @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            Glide.with(context.getApplicationContext()).load(path).into(imageView);
-        }
-
     }
 
     @Override
@@ -92,6 +84,14 @@ public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemCount() {
         return mList.isEmpty() ? 0 : mList.size();
+    }
+
+    public class GlideImage extends ImageLoader {
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            Glide.with(context.getApplicationContext()).load(path).into(imageView);
+        }
+
     }
 
     class ViewHolderOne extends RecyclerView.ViewHolder {
@@ -120,7 +120,7 @@ public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void setData(View view, int position);
     }
 
-    private OnItem onItem = null;
+    private MyRecyAdapter1.OnItem onItem = null;
 
     @Override
     public void onClick(View v) {
@@ -129,7 +129,7 @@ public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public void OnItemClick(OnItem onItem) {
+    public void OnItemClick(MyRecyAdapter1.OnItem onItem) {
         this.onItem = onItem;
     }
 }

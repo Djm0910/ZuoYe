@@ -1,7 +1,5 @@
 package demo.example.com.chineseuniversitystudentsonline.ui.fragment;
 
-import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,10 +19,10 @@ import demo.example.com.chineseuniversitystudentsonline.net.NetModel;
 import demo.example.com.chineseuniversitystudentsonline.net.NetPresenter;
 
 /**
- * Created by 丁军明 on 2017/11/27.
+ * Created by 丁军明 on 2017/11/28.
  */
 
-public class HomeFragment extends BaseFragment<NetPresenter, NetModel> implements NetContract.View {
+public class TuiSongFragment extends BaseFragment<NetPresenter, NetModel> implements NetContract.View  {
     private RecyclerView mRecy;
     private List<TouTian.DataBean> mList = new ArrayList<>();
     private MyRecyAdapter myRecyAdapter;
@@ -69,7 +67,7 @@ public class HomeFragment extends BaseFragment<NetPresenter, NetModel> implement
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_tuisong;
     }
 
 }

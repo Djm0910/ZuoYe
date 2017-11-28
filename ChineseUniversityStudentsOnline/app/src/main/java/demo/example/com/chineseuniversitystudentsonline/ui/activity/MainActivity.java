@@ -22,6 +22,7 @@ import demo.example.com.chineseuniversitystudentsonline.ui.fragment.CampusFragme
 import demo.example.com.chineseuniversitystudentsonline.ui.fragment.ClassroomFragment;
 import demo.example.com.chineseuniversitystudentsonline.ui.fragment.HomeFragment;
 import demo.example.com.chineseuniversitystudentsonline.ui.fragment.ObtainFragment;
+import demo.example.com.chineseuniversitystudentsonline.ui.fragment.TuiSongFragment;
 import demo.example.com.chineseuniversitystudentsonline.utils.FragmentBuilder;
 
 public class MainActivity extends BaseActivity<NetPresenter, NetModel> implements NetContract.View {
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
     private CampusFragment mCampusFragment;
     private ClassroomFragment mClassroomFragment;
     private ObtainFragment mObtainFragment;
+    private TuiSongFragment mTuiSongFragment;
     private ViewPager mViewPager;
     private MyViewAdapter myAdapter;
     private Button mAdd;
@@ -69,21 +71,24 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
         mCampusFragment = new CampusFragment();
         mClassroomFragment = new ClassroomFragment();
         mObtainFragment = new ObtainFragment();
+        mTuiSongFragment = new TuiSongFragment();
         mList.add(mHomeFragment);
-        mList.add(mCampaignFragment);
+        mList.add(mObtainFragment);
         mList.add(mCampusFragment);
         mList.add(mClassroomFragment);
-        mList.add(mObtainFragment);
+        mList.add(mCampaignFragment);
+        mList.add(mTuiSongFragment);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     private void initTab() {
         mTabLayout = (TabLayout) findViewById(R.id.TabLayout);
         mTitle.add("头条");
-        mTitle.add("校园");
         mTitle.add("就业");
+        mTitle.add("校园");
         mTitle.add("课堂");
         mTitle.add("活动");
+        mTitle.add("一节一推送");
     }
 
     @Override
