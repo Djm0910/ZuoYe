@@ -1,7 +1,6 @@
 package demo.example.com.chineseuniversitystudentsonline.ui.fragment;
 
 import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -31,11 +30,10 @@ public class HomeFragment extends BaseFragment<NetPresenter, NetModel> implement
     private ArrayList<String> mUrl = new ArrayList<>();
     private boolean mBoo = true;
 
-
     @Override
     public void show(String ss) {
         Gson gson = new Gson();
-        TouTian touTian = gson.fromJson(ss, TouTian.class);
+        final TouTian touTian = gson.fromJson(ss, TouTian.class);
         mList = touTian.getData();
         if (mBoo){
             mUrl.add("http://upload.univs.cn/2017/1126/thumb_640_314_1511675972339.jpg");
