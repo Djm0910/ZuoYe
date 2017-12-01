@@ -4,10 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/Recy"
+
+
+        <FrameLayout
+            android:id="@+id/Fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent">
+
+                <com.androidkun.PullToRefreshRecyclerView
+                    android:id="@+id/Recy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.androidkun.PullToRefreshRecyclerView>
+        </FrameLayout>
 
 
 </LinearLayout>

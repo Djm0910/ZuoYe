@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.1"
     defaultConfig {
         applicationId "demo.example.com.chineseuniversitystudentsonline"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -33,4 +33,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.github.bumptech.glide:glide:4.0.0'
+    compile 'com.androidkun:pulltorefreshrecyclerview:1.0.6'
 }

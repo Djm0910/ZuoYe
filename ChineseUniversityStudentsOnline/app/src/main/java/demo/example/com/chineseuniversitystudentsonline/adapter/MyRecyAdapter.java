@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidkun.PullToRefreshRecyclerView;
 import com.bumptech.glide.Glide;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -23,7 +24,7 @@ import demo.example.com.chineseuniversitystudentsonline.R;
  * Created by 丁军明 on 2017/11/27.
  */
 
-public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class MyRecyAdapter extends PullToRefreshRecyclerView.Adapter<PullToRefreshRecyclerView.ViewHolder> implements View.OnClickListener {
     private List<TouTian.DataBean> mList;
     private Context mContext;
     private ArrayList<String> mUrl;
@@ -37,9 +38,9 @@ public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PullToRefreshRecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        RecyclerView.ViewHolder holder;
+        PullToRefreshRecyclerView.ViewHolder holder;
         if (ONE_ITEM == viewType) {
             View inflate = inflater.inflate(R.layout.recy_banner, parent, false);
             inflate.setOnClickListener(this);
@@ -94,7 +95,7 @@ public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return mList.isEmpty() ? 0 : mList.size();
     }
 
-    class ViewHolderOne extends RecyclerView.ViewHolder {
+    class ViewHolderOne extends PullToRefreshRecyclerView.ViewHolder {
         private Banner mBanner;
 
         public ViewHolderOne(View itemView) {
@@ -103,7 +104,7 @@ public class MyRecyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    class ViewHolderTwo extends RecyclerView.ViewHolder {
+    class ViewHolderTwo extends PullToRefreshRecyclerView.ViewHolder {
 
         private ImageView mImg;
         private TextView mTitle, mContent;

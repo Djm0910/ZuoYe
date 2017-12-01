@@ -57,15 +57,9 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
     @Override
     protected void initView() {
         initTab();
-        initViewPager();
-
-
-    }
-
-    private void initViewPager() {
         getData(i);
-
     }
+
 
     private void getData(int i) {
         mHomeFragment = new HomeFragment();
