@@ -8,8 +8,12 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import demo.example.com.chineseuniversitystudentsonline.Entiy.Tab;
 import demo.example.com.chineseuniversitystudentsonline.R;
 import demo.example.com.chineseuniversitystudentsonline.adapter.MyViewAdapter;
 import demo.example.com.chineseuniversitystudentsonline.base.BaseActivity;
@@ -43,6 +47,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
 
     @Override
     protected void initData() {
+        mPresenter.getDataFromModel("http://mapi.univs.cn/mobile/index.php?app=mobile&type=mobile&controller=content&action=category");
 
     }
 
@@ -50,17 +55,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
     protected void initView() {
         initTab();
         initViewPager();
-        myAdapter = new MyViewAdapter(getSupportFragmentManager(), mList, mTitle);
-        mViewPager.setAdapter(myAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mAdd = (Button) findViewById(R.id.Btn_add);
-        mAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,LoadMoreActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
     }
 
@@ -83,12 +78,6 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
 
     private void initTab() {
         mTabLayout = (TabLayout) findViewById(R.id.TabLayout);
-        mTitle.add("头条");
-        mTitle.add("就业");
-        mTitle.add("校园");
-        mTitle.add("课堂");
-        mTitle.add("活动");
-        mTitle.add("一节一推送");
     }
 
     @Override
@@ -98,6 +87,23 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
 
     @Override
     public void show(String ss) {
+        Gson gson = new Gson();
+        Tab tab = gson.fromJson(ss, Tab.class);
+        List<Tab.DataBean> data = tab.getData();
+        for (int i = 0; i < data.size(); i++) {
+            mTitle.add(data.get(i).getName());
+        }
+        myAdapter = new MyViewAdapter(getSupportFragmentManager(), mList, mTitle);
+        mViewPager.setAdapter(myAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mAdd = (Button) findViewById(R.id.Btn_add);
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,LoadMoreActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
