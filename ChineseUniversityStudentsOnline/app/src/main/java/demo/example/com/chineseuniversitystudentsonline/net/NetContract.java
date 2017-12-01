@@ -1,5 +1,7 @@
 package demo.example.com.chineseuniversitystudentsonline.net;
 
+import java.util.Map;
+
 import demo.example.com.chineseuniversitystudentsonline.base.BaseModel;
 import demo.example.com.chineseuniversitystudentsonline.base.BasePresenter;
 import demo.example.com.chineseuniversitystudentsonline.base.BaseView;
@@ -15,7 +17,7 @@ public class NetContract {
     }
 
     interface Model extends BaseModel {
-        void getDataFromNet(String url,CallBacks callBacks);
+        void getDataFromNet(String url, Map<String, Object> map, CallBacks callBacks);
     }
 
     abstract static class Presenter extends BasePresenter<Model, View> {
@@ -24,6 +26,7 @@ public class NetContract {
         public void onStart() {
 
         }
-        public abstract void getDataFromModel(String url);
+
+        public abstract void getDataFromModel(String url, Map<String, Object> map);
     }
 }
