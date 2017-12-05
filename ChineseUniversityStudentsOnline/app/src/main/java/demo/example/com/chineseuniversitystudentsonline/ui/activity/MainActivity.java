@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -33,7 +34,7 @@ import demo.example.com.chineseuniversitystudentsonline.net.NetModel;
 import demo.example.com.chineseuniversitystudentsonline.net.NetPresenter;
 import demo.example.com.chineseuniversitystudentsonline.ui.fragment.HomeFragment;
 
-public class MainActivity extends BaseActivity<NetPresenter, NetModel> implements NetContract.View {
+public class MainActivity extends BaseActivity<NetPresenter, NetModel> implements NetContract.View, View.OnClickListener {
 
     private TabLayout mTabLayout;
     private Toolbar mToolbar;
@@ -43,7 +44,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
 
     private ViewPager mViewPager;
     private MyViewAdapter myAdapter;
-    private Button mAdd;
+    private Button mAdd, mNight,mDay;
     private int i = 1;
     private int pageIndex = 1;
     private UMAuthListener umAuthListener = new UMAuthListener() {
@@ -69,7 +70,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
         }
     };
 
-    private UMShareListener umShareListener = new UMShareListener(){
+    private UMShareListener umShareListener = new UMShareListener() {
 
         @Override
         public void onStart(SHARE_MEDIA share_media) {
@@ -98,14 +99,15 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
         getDataByPage(0);
 
     }
-    private void getDataByPage(int pageIndex) {
-        Map<String,Object> map=new HashMap<String, Object>();
 
-        map.put("app","mobile");
-        map.put("type","mobile");
-        map.put("controller","content");
-        map.put("action","category");
-        mPresenter.getDataFromModel("http://mapi.univs.cn/mobile/index.php",map);
+    private void getDataByPage(int pageIndex) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("app", "mobile");
+        map.put("type", "mobile");
+        map.put("controller", "content");
+        map.put("action", "category");
+        mPresenter.getDataFromModel("http://mapi.univs.cn/mobile/index.php", map);
 
     }
 
@@ -113,13 +115,17 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
     protected void initView() {
         initTab();
         getData(i);
+        mNight = (Button) findViewById(R.id.Btn_Night);
+        mNight.setOnClickListener(this);
+        mDay = (Button) findViewById(R.id.Btn_Day);
+        mDay.setOnClickListener(this);
     }
 
 
     private void getData(int i) {
         mHomeFragment = new HomeFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("index",pageIndex);
+        bundle.putInt("index", pageIndex);
         mHomeFragment.setArguments(bundle);
         mList.add(mHomeFragment);
         pageIndex++;
@@ -155,7 +161,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
             case R.id.Options_One:
                 new ShareAction(MainActivity.this)
                         .withText("hello")
-                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ)
+                        .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ)
                         .setCallback(umShareListener)
                         .open();
 
@@ -177,7 +183,6 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
     }
 
 
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -185,7 +190,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
 
     @Override
     public void show(String ss) {
-        Log.e("url",ss);
+        Log.e("url", ss);
         Gson gson = new Gson();
         Tab tab = gson.fromJson(ss, Tab.class);
         List<Tab.DataBean> data = tab.getData();
@@ -196,16 +201,28 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
         mViewPager.setAdapter(myAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mAdd = (Button) findViewById(R.id.Btn_add);
-        mAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mAdd.setOnClickListener(this);
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.Btn_add:
                 if (i < mTitle.size()) {
                     i++;
                     getData(i);
                     myAdapter.notifyDataSetChanged();
                 }
-            }
-        });
-
+                break;
+            case R.id.Btn_Night:
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);//切换夜间模式
+                recreate();//重新启动当前activity
+                break;
+            case R.id.Btn_Day:
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);//切换日间模式
+                recreate();//重新启动当前activity
+        }
     }
 }

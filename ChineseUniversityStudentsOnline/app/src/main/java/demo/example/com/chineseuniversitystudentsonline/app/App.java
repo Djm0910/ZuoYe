@@ -1,6 +1,8 @@
 package demo.example.com.chineseuniversitystudentsonline.app;
 
 import android.app.Application;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.umeng.analytics.MobclickAgent;
