@@ -5,10 +5,23 @@
     <item
         android:id="@+id/Options_One"
         android:title="分享"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/Options_Two"
         android:title="登录"
-        app:showAsAction="always"
+        app:showAsAction="never"
+        />
+
+
+    <item
+        android:id="@+id/Options_Three"
+        android:title="夜间"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/Options_four"
+        android:title="白天"
+        app:showAsAction="never"
         />
 </menu>

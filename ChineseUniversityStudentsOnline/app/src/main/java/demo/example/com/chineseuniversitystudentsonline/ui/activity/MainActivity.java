@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
 
     private ViewPager mViewPager;
     private MyViewAdapter myAdapter;
-    private Button mAdd, mNight,mDay;
+    private Button mAdd;
     private int i = 1;
     private int pageIndex = 1;
     private UMAuthListener umAuthListener = new UMAuthListener() {
@@ -115,10 +115,6 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
     protected void initView() {
         initTab();
         getData(i);
-        mNight = (Button) findViewById(R.id.Btn_Night);
-        mNight.setOnClickListener(this);
-        mDay = (Button) findViewById(R.id.Btn_Day);
-        mDay.setOnClickListener(this);
     }
 
 
@@ -170,6 +166,14 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
                 UMShareAPI mShareAPI = UMShareAPI.get(this);
                 mShareAPI.doOauthVerify(MainActivity.this, SHARE_MEDIA.QQ, umAuthListener);
                 break;
+            case R.id.Options_Three:
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);//切换夜间模式
+                recreate();//重新启动当前activity
+                break;
+            case R.id.Options_four:
+                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);//切换日间模式
+                recreate();//重新启动当前activity
+                break;
 
         }
 
@@ -216,13 +220,7 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
                     myAdapter.notifyDataSetChanged();
                 }
                 break;
-            case R.id.Btn_Night:
-                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);//切换夜间模式
-                recreate();//重新启动当前activity
-                break;
-            case R.id.Btn_Day:
-                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);//切换日间模式
-                recreate();//重新启动当前activity
+
         }
     }
 }

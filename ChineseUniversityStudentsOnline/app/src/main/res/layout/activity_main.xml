@@ -38,34 +38,16 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/TabLayout"
-            android:layout_width="320dp"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            app:tabTextColor="#2c74ab"
             style="@style/Base.Widget.Design.TabLayout."></android.support.design.widget.TabLayout>
 
         <Button
             android:id="@+id/Btn_add"
-            android:layout_width="30dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="+"
-            android:background="#FFFFFF"/>
+            android:text="+" />
 
-        <Button
-            android:id="@+id/Btn_Night"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:text="黑夜"
-            android:textColor="#000000"
-            android:background="#FFFFFF"/>
-
-        <Button
-            android:id="@+id/Btn_Day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="白天"
-            android:textColor="#FFFFFF"
-            />
 
     </LinearLayout>
 
