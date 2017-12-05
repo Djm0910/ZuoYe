@@ -1,14 +1,23 @@
 package demo.example.com.chineseuniversitystudentsonline.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.gson.Gson;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +36,7 @@ import demo.example.com.chineseuniversitystudentsonline.ui.fragment.HomeFragment
 public class MainActivity extends BaseActivity<NetPresenter, NetModel> implements NetContract.View {
 
     private TabLayout mTabLayout;
+    private Toolbar mToolbar;
     private ArrayList<Fragment> mList = new ArrayList<>();
     private ArrayList<String> mTitle = new ArrayList<>();
     private HomeFragment mHomeFragment;
@@ -36,6 +46,51 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
     private Button mAdd;
     private int i = 1;
     private int pageIndex = 1;
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media, int i) {
+
+        }
+    };
+
+    private UMShareListener umShareListener = new UMShareListener(){
+
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+
+        }
+    };
 
 
     @Override
@@ -73,8 +128,55 @@ public class MainActivity extends BaseActivity<NetPresenter, NetModel> implement
     private void initTab() {
         mTabLayout = (TabLayout) findViewById(R.id.TabLayout);
         mViewPager = (ViewPager) findViewById(R.id.ViewPager);
+        mToolbar = (Toolbar) findViewById(R.id.ToolBar);
+        mToolbar.setNavigationIcon(R.drawable.back);
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Options_One:
+                new ShareAction(MainActivity.this)
+                        .withText("hello")
+                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ)
+                        .setCallback(umShareListener)
+                        .open();
+
+                break;
+            case R.id.Options_Two:
+                UMShareAPI mShareAPI = UMShareAPI.get(this);
+                mShareAPI.doOauthVerify(MainActivity.this, SHARE_MEDIA.QQ, umAuthListener);
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+
 
     @Override
     public int getLayoutId() {
