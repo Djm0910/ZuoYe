@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 丁军明 on 2017/11/27.
@@ -13,9 +14,9 @@ import java.util.ArrayList;
 
 public class MyViewAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> mList;
-    private ArrayList<String> mTitle;
+    private List<String> mTitle;
 
-    public MyViewAdapter(FragmentManager fm, ArrayList<Fragment> mList, ArrayList<String> mTitle) {
+    public MyViewAdapter(FragmentManager fm, ArrayList<Fragment> mList, List<String> mTitle) {
         super(fm);
         this.mList = mList;
         this.mTitle = mTitle;
@@ -31,6 +32,10 @@ public class MyViewAdapter extends FragmentStatePagerAdapter {
         return  mList.isEmpty() ? 0 : mList.size();
     }
 
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 
     @Override
     public CharSequence getPageTitle(int position) {

@@ -59,7 +59,7 @@ public class FragmentBuilder {
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                e.printStackTrace() ;
             }
 
         }

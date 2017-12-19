@@ -1,5 +1,6 @@
 package demo.example.com.chineseuniversitystudentsonline.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import demo.example.com.chineseuniversitystudentsonline.base.BaseFragment;
 import demo.example.com.chineseuniversitystudentsonline.net.NetContract;
 import demo.example.com.chineseuniversitystudentsonline.net.NetModel;
 import demo.example.com.chineseuniversitystudentsonline.net.NetPresenter;
+import demo.example.com.chineseuniversitystudentsonline.ui.activity.LoadMoreActivity;
 import demo.example.com.chineseuniversitystudentsonline.utils.FragmentBuilder;
 
 /**
@@ -37,6 +39,7 @@ public class HomeFragment extends BaseFragment<NetPresenter, NetModel> implement
     private ArrayList<String> mUrl = new ArrayList<>();
     private boolean mBoo = true;
     private int pageIndex = 0;
+    private int page = 1;
     private FrameLayout frameLayout;
     private TouTian touTian;
     private Handler handler = new Handler();
@@ -46,26 +49,33 @@ public class HomeFragment extends BaseFragment<NetPresenter, NetModel> implement
     public void show(String ss) {
         Gson gson = new Gson();
         touTian = gson.fromJson(ss, TouTian.class);
-        mList = touTian.getData();
-        if (mBoo) {
-            mUrl.add("http://upload.univs.cn/2017/1126/thumb_640_314_1511675972339.jpg");
-            mUrl.add("http://upload.univs.cn/2017/1114/1510638210291.jpg");
-            mUrl.add("http://upload.univs.cn/2017/0619/thumb_640_314_1497839124349.jpg");
-            mBoo = false;
-        }
-        mRecy.setRefreshComplete();
-
-        myRecyAdapter = new MyRecyAdapter(mList, getActivity(), mUrl);
-        mRecy.setAdapter(myRecyAdapter);
-        myRecyAdapter.OnItemClick(new MyRecyAdapter.OnItem() {
-            @Override
-            public void setData(View view, int position) {
-                Toast.makeText(getActivity(), "hello", Toast.LENGTH_SHORT).show();
-                contentid = mList.get(position).getContentid();
-                FragmentBuilder.getInstance().init().add(R.id.Fragment, ShowFragment.class, true).Builder();
+        mList.addAll(touTian.getData());
+        if (mList.isEmpty()) {
+            pageIndex += 1;
+            getDataByPage(pageIndex);
+            pageIndex += 1;
+        } else {
+            if (mBoo) {
+                mUrl.add("http://upload.univs.cn/2017/1126/thumb_640_314_1511675972339.jpg");
+                mUrl.add("http://upload.univs.cn/2017/1114/1510638210291.jpg");
+                mUrl.add("http://upload.univs.cn/2017/0619/thumb_640_314_1497839124349.jpg");
+                mBoo = false;
             }
+            mRecy.setRefreshComplete();
 
-        });
+            myRecyAdapter = new MyRecyAdapter(mList, getActivity(), mUrl);
+            mRecy.setAdapter(myRecyAdapter);
+            myRecyAdapter.OnItemClick(new MyRecyAdapter.OnItem() {
+                @Override
+                public void setData(View view, int position) {
+                    contentid = mList.get(position).getContentid();
+                    Intent intent = new Intent(getActivity(), LoadMoreActivity.class);
+                    startActivity(intent);
+//                FragmentBuilder.getInstance().init().add(R.id.Fragment, ShowFragment.class, true).Builder();
+                }
+
+            });
+        }
 
 
     }
@@ -82,9 +92,10 @@ public class HomeFragment extends BaseFragment<NetPresenter, NetModel> implement
         map.put("catid", pageIndex);
         map.put("controller", "content");
         map.put("action", "index");
-        map.put("page", 1);
+        map.put("page", page);
         map.put("time", "0");
         presenter.getDataFromModel("http://mapi.univs.cn/mobile/index.php", map);
+        page++;
     }
 
     @Override
@@ -121,8 +132,8 @@ public class HomeFragment extends BaseFragment<NetPresenter, NetModel> implement
                     public void run() {
                         mRecy.setLoadMoreComplete();
                         //模拟加载数据的情况
-                        mList.addAll(touTian.getData());
-                        myRecyAdapter.notifyDataSetChanged();
+                        getDataByPage(pageIndex);
+
                     }
                 }, 2000);
 
@@ -143,5 +154,5 @@ public class HomeFragment extends BaseFragment<NetPresenter, NetModel> implement
     public interface setResult {
         void setResult(int str);
     }
-    
+
 }
